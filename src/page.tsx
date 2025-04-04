@@ -4,16 +4,9 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogTrigger, DialogTitle } from "@/components/ui/dialog";
 
 export default function Page() {
-  const [darkModeEnabled, setDarkModeEnabled] = useState(() => {
-    if (typeof window !== "undefined") {
-      return localStorage.getItem("darkMode") === "true";
-    }
-    return false;
-  });
   const [zoteroItems, setZoteroItems] = useState([]);
   const [activeTab, setActiveTab] = useState("All");
-
-  const [activeProject, setActiveProject] = useState(null);
+  const [showAbout, setShowAbout] = useState(false);
 
   useEffect(() => {
     let ignore = false;
@@ -26,12 +19,6 @@ export default function Page() {
       ignore = true;
     };
   }, []);
-
-  useEffect(() => {
-    if (typeof window !== "undefined") {
-      localStorage.setItem("darkMode", darkModeEnabled.toString());
-    }
-  }, [darkModeEnabled]);
 
   const projects = [
     {
@@ -95,22 +82,146 @@ export default function Page() {
     },
   ];
 
+  // Media appearances section
+  const mediaAppearances = [
+    {
+      title: "TVNZ Breakfast - Floods and Infrastructure",
+      outlet: "TVNZ",
+      date: "2023",
+      description: "Discussion on urban infrastructure resilience and flood mitigation strategies.",
+      link: "https://www.youtube.com/watch?v=-TukXupo5Zg",
+      featured: true
+    },
+    {
+      title: "Fixing Auckland's Transport | The Deep Dive",
+      outlet: "Newsroom",
+      date: "2023",
+      description: "Video essay on Auckland's transport history and car dependency, discussing solutions beyond large infrastructure projects.",
+      link: "https://www.youtube.com/watch?v=odpbyt3SyQ8",
+      featured: true
+    },
+    {
+      title: "Will congestion charges solve Auckland's traffic woes?",
+      outlet: "The Project NZ",
+      date: "2023",
+      description: "Analysis of Auckland's upcoming congestion charging system and international best practices.",
+      link: "https://www.youtube.com/watch?v=ZRTeYSfQPsw",
+      featured: true
+    },
+    {
+      title: "Creating 'sponge cities' to cope with more rainfall",
+      outlet: "The Conversation",
+      date: "August 14, 2023",
+      description: "Analysis of how urban design can help manage increased rainfall without billion-dollar investments.",
+      link: "https://theconversation.com/creating-sponge-cities-to-cope-with-more-rainfall-neednt-cost-billions-but-nz-has-to-start-now-211181",
+      type: "article"
+    },
+    {
+      title: "Road-heavy transport plans a bridge to nowhere",
+      outlet: "Newsroom",
+      date: "August 3, 2023",
+      description: "Op-ed on sustainable transportation planning and alternatives to road-centric infrastructure.",
+      link: "https://www.newsroom.co.nz/ideasroom/road-heavy-transport-plans-a-bridge-to-nowhere",
+      type: "article"
+    },
+    {
+      title: "70 years of road-based policies created today's problems",
+      outlet: "The Conversation",
+      date: "August 1, 2023",
+      description: "Historical analysis of transportation policy and its impact on current urban challenges.",
+      link: "https://theconversation.com/70-years-of-road-based-policies-created-todays-problems-does-nationals-transport-plan-add-up-210696",
+      type: "article"
+    }
+  ];
+
+  // Fetch more media items if needed
+  const recentOpEds = [
+    {
+      title: "Your public transport, your future",
+      outlet: "NewsRoom",
+      date: "June 7, 2024",
+      type: "Op-ed"
+    },
+    {
+      title: "NZ Budget 2024: 'tax relief' for the 'squeezed middle'",
+      outlet: "The Conversation",
+      date: "May 30, 2024",
+      type: "Analysis"
+    },
+    {
+      title: "How to end the wasteful boom-bust cycle driving NZ's infrastructure gap",
+      outlet: "The Conversation",
+      date: "May 23, 2024",
+      type: "Analysis"
+    },
+    {
+      title: "Transport planning has gone off the rails",
+      outlet: "NewsRoom",
+      date: "April 19, 2024",
+      type: "Op-ed"
+    },
+    {
+      title: "Convenience never trumps the lives of children",
+      outlet: "NewsRoom",
+      date: "March 19, 2024",
+      type: "Op-ed"
+    },
+    {
+      title: "There is a road to zero, but you have to actually try",
+      outlet: "NewsRoom",
+      date: "March 7, 2024",
+      type: "Op-ed"
+    }
+  ];
+
   const categories = ["All", "Dashboard", "Visualization", "Tool", "Research"];
   const filteredProjects = activeTab === "All" ? projects : projects.filter((p) => p.category === activeTab);
 
   return (
-    <div className={darkModeEnabled ? "dark bg-black text-white" : "bg-white text-black"}>
-      <div className="relative overflow-hidden animate-gradient bg-gradient-to-br from-sky-50 via-blue-100 to-white dark:from-black dark:via-gray-900 dark:to-gray-800 border-b p-8 flex flex-col md:flex-row justify-between items-center bg-cover bg-center" style={{ backgroundImage: 'url(https://tfwelch.com/images/header-background.jpg)' }}>
+    <div className="bg-white text-black">
+      <div className="relative overflow-hidden bg-gradient-to-br from-sky-50 via-blue-100 to-white border-b p-8 flex flex-col md:flex-row justify-between items-center bg-cover bg-center" style={{ backgroundImage: 'url(https://tfwelch.com/images/header-background.jpg)' }}>
         <div className="text-center md:text-left">
           <h1 className="text-3xl md:text-4xl font-bold drop-shadow">Timothy F. Welch</h1>
-          <p className="text-sm text-gray-500 dark:text-gray-400">Urban planning, transport analytics, and data storytelling</p>
+          <p className="text-sm text-gray-500">Urban planning, transport analytics, and data storytelling</p>
         </div>
-        <div className="flex gap-2">
-          <Button onClick={() => setDarkModeEnabled(!darkModeEnabled)}>
-            {darkModeEnabled ? "Light Mode" : "Dark Mode"}
-          </Button>
+        <div className="flex gap-2 mt-4 md:mt-0">
+          <Dialog open={showAbout} onOpenChange={setShowAbout}>
+            <DialogTrigger asChild>
+              <Button>About Me</Button>
+            </DialogTrigger>
+            <DialogContent className="max-w-3xl">
+              <DialogTitle>About Timothy F. Welch</DialogTitle>
+              <div className="flex flex-col md:flex-row gap-6 mt-4">
+                <div className="md:w-1/3">
+                  <img 
+                    src="https://tfwelch.com/images/profile-photo.jpg" 
+                    alt="Timothy F. Welch" 
+                    className="rounded-lg shadow-md w-full"
+                    onError={(e) => e.currentTarget.style.display = 'none'} // Hide if image doesn't exist
+                  />
+                </div>
+                <div className="md:w-2/3">
+                  <p className="mb-4">
+                    I am Senior Lecturer in Urban Planning at the University of Auckland, where I also serve as Co-Director of the Future Cities Research Hub. My work focuses on transportation planning, urban analytics, and sustainable infrastructure development.
+                  </p>
+                  <p className="mb-4">
+                    With a background spanning urban planning, law, and transportation policy, my research examines the intersection of mobility, urban form, and climate resilience. I'm particularly interested in developing data-driven solutions for the first/last mile problem and creating more equitable, accessible transportation systems.
+                  </p>
+                  <p className="mb-4">
+                    Prior to joining the University of Auckland, I was an Assistant Professor at Georgia Tech's School of City and Regional Planning and Assistant Director of the Center for Quality Growth and Regional Development. I hold a PhD in Urban and Regional Planning from the University of Maryland, along with JD and LLB degrees.
+                  </p>
+                  <p>
+                    Beyond my academic work, I actively engage in public discourse through media appearances and opinion pieces, advocating for evidence-based urban planning policies that create more sustainable, livable cities.
+                  </p>
+                </div>
+              </div>
+            </DialogContent>
+          </Dialog>
           <a href="#projects">
             <Button variant="outline">Projects</Button>
+          </a>
+          <a href="#media">
+            <Button variant="outline">Media</Button>
           </a>
           <a href="#publications">
             <Button variant="outline">Publications</Button>
@@ -119,6 +230,7 @@ export default function Page() {
       </div>
 
       <div id="projects" className="p-4">
+        <h2 className="text-2xl font-bold mb-4">Projects</h2>
         <div className="mb-4 flex gap-2 flex-wrap">
           {categories.map((cat) => (
             <Button key={cat} variant={cat === activeTab ? "default" : "outline"} onClick={() => setActiveTab(cat)}>
@@ -127,27 +239,27 @@ export default function Page() {
           ))}
         </div>
 
-        <div className="grid md:grid-cols-2 gap-4">
+        <div className="grid md:grid-cols-3 gap-4">
           {filteredProjects.map((project, index) => (
             <Dialog key={index}>
               <DialogTrigger asChild>
-                <Card className="transition-all hover:scale-[1.01] hover:shadow-lg cursor-pointer">
-                  <CardContent>
-                    {project.type === "image" && <img loading="lazy" src={project.src} alt={project.title} className="w-full rounded-xl" />}
+                <Card className="transition-all hover:scale-[1.01] hover:shadow-lg cursor-pointer h-full">
+                  <CardContent className="p-4">
+                    {project.type === "image" && <img loading="lazy" src={project.src} alt={project.title} className="w-full h-40 object-cover rounded-xl" />}
                     {project.type === "iframe" && (
-                      <iframe loading="lazy" src={project.src} width="100%" height="300" frameBorder="0" scrolling="no" className="rounded-xl"></iframe>
+                      <iframe loading="lazy" src={project.src} width="100%" height="160" frameBorder="0" scrolling="no" className="rounded-xl"></iframe>
                     )}
                     {project.type === "video" && (
-                      <video controls loading="lazy" className="w-full rounded-xl">
+                      <video controls loading="lazy" className="w-full h-40 object-cover rounded-xl">
                         <source src={project.src} type="video/mp4" />
                         Your browser does not support the video tag.
                       </video>
                     )}
-                    <h2 className="text-xl font-semibold mt-2">{project.title}</h2>
-                    <p className="mt-1 text-sm">{project.description}</p>
+                    <h2 className="text-lg font-semibold mt-2">{project.title}</h2>
+                    <p className="mt-1 text-xs text-gray-600 line-clamp-2">{project.description}</p>
                     {project.link && (
                       <a href={project.link} target="_blank" rel="noopener noreferrer">
-                        <Button className="mt-2">Explore</Button>
+                        <Button size="sm" className="mt-2">Explore</Button>
                       </a>
                     )}
                   </CardContent>
@@ -162,13 +274,59 @@ export default function Page() {
         </div>
       </div>
 
+      <div id="media" className="p-4 mt-10 bg-gray-50">
+        <h2 className="text-2xl font-bold mb-4">Media & Appearances</h2>
+        
+        <h3 className="text-xl font-semibold mb-3">Featured Video Appearances</h3>
+        <div className="grid md:grid-cols-3 gap-4 mb-8">
+          {mediaAppearances.filter(item => item.featured).map((item, index) => (
+            <Card key={index} className="hover:shadow-md transition-all">
+              <CardContent className="p-4">
+                <h3 className="font-semibold">{item.title}</h3>
+                <p className="text-sm text-gray-600">{item.outlet} • {item.date}</p>
+                <p className="text-sm mt-2">{item.description}</p>
+                {item.link && (
+                  <a href={item.link} target="_blank" rel="noopener noreferrer">
+                    <Button size="sm" variant="outline" className="mt-3">Watch</Button>
+                  </a>
+                )}
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+        
+        <h3 className="text-xl font-semibold mb-3">Recent Articles & Op-Eds</h3>
+        <div className="grid md:grid-cols-3 gap-4">
+          {mediaAppearances.filter(item => item.type === "article").concat(recentOpEds).slice(0, 6).map((item, index) => (
+            <Card key={index} className="hover:shadow-md transition-all">
+              <CardContent className="p-4">
+                <h3 className="font-semibold">{item.title}</h3>
+                <p className="text-sm text-gray-600">{item.outlet} • {item.date}</p>
+                <p className="text-sm mt-2">{item.description || item.type}</p>
+                {item.link && (
+                  <a href={item.link} target="_blank" rel="noopener noreferrer">
+                    <Button size="sm" variant="outline" className="mt-3">Read More</Button>
+                  </a>
+                )}
+              </CardContent>
+            </Card>
+          ))}
+        </div>
+        
+        <div className="text-center mt-6">
+          <a href="https://theconversation.com/profiles/timothy-welch-1177266/articles" target="_blank" rel="noopener noreferrer">
+            <Button variant="outline">View More Articles</Button>
+          </a>
+        </div>
+      </div>
+
       <div id="publications" className="p-4 mt-10">
         <h2 className="text-2xl font-bold mb-4">Publications</h2>
         {zoteroItems.length === 0 ? (
           <p>Loading publications from Zotero…</p>
         ) : (
           <ul className="list-disc pl-5 space-y-3">
-            {zoteroItems.map((item) => (
+            {zoteroItems.slice(0, 10).map((item) => (
               <li key={item.key} className="text-sm">
                 <strong>{item.data.title}</strong>
                 {item.data.publicationTitle && <span> — <em>{item.data.publicationTitle}</em></span>}
@@ -183,13 +341,14 @@ export default function Page() {
             href="https://scholar.google.com/citations?user=KDf4PW0AAAAJ&hl=en"
             className="text-blue-600 underline"
             target="_blank"
+            rel="noopener noreferrer"
           >
             Google Scholar
           </a>.
         </p>
       </div>
 
-      <footer className="p-4 mt-10 border-t text-center text-sm text-gray-500 dark:text-gray-400">
+      <footer className="p-4 mt-10 border-t text-center text-sm text-gray-500">
         <p>&copy; {new Date().getFullYear()} Timothy F. Welch</p>
         <p>
           <a href="mailto:t.welch@auckland.ac.nz" className="underline">Email</a> |
