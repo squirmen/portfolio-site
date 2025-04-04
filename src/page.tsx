@@ -351,7 +351,7 @@ export default function Page() {
         </div>
         
         <div className="text-center mt-6">
-          <a href="https://theconversation.com/profiles/timothy-welch-1177266/articles" target="_blank" rel="noopener noreferrer">
+          <a href="https://theconversation.com/profiles/timothy-welch-1252494/articles" target="_blank" rel="noopener noreferrer">
             <Button variant="outline">View More Articles</Button>
           </a>
         </div>
