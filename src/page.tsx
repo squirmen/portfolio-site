@@ -47,7 +47,7 @@ export default function Page() {
       title: "Cycleway Dashboard",
       category: "Dashboard",
       type: "image",
-      src: "https://tfwelch.com/images/cycleway_dashboard.png",
+      src: "https://assets.tfwelch.com/images/cycleway_dashboard.png",
       description: "Live cycleway usage trends, leaderboard, anomaly detection & more.",
       link: "https://cycleway.tfwelch.com",
       details: "Built in Chart.js + Bootstrap, analyzing Auckland cycle counters across 75 locations. Includes filtering, rolling averages, and anomaly detection.",
@@ -56,7 +56,7 @@ export default function Page() {
       title: "Te Huia Train Ridership",
       category: "Visualization",
       type: "image",
-      src: "https://tfwelch.com/images/te_huia.png",
+      src: "https://assets.tfwelch.com/images/te_huia.png",
       description: "Monthly passenger growth trends and service normalization from 2022 to 2025.",
       details: "Visualization using matplotlib and pandas, showing normalized trends vs. raw passenger counts.",
     },
@@ -64,7 +64,7 @@ export default function Page() {
       title: "Auckland Metro Animation",
       category: "Visualization",
       type: "video",
-      src: "https://tfwelch.com/videos/AT_Metro.mp4",
+      src: "https://assets.tfwelch.com/videos/AT_Metro.mp4",
       description: "Animated GTFS-based map of all public transport services in Auckland in one day.",
       details: "Generated using Python, Mapbox, and GTFS real-time feed. Shows comprehensive mode integration across a day.",
     },
@@ -72,7 +72,7 @@ export default function Page() {
       title: "Auckland Harbour Bridge Traffic",
       category: "Visualization",
       type: "video",
-      src: "https://tfwelch.com/videos/ahb_traffic.mov",
+      src: "https://assets.tfwelch.com/videos/ahb_traffic.mov",
       description: "Animated graph of traffic flow and road capacity across the Auckland Harbour Bridge.",
       details: "Traffic data mapped against bridge capacity showing congestion thresholds in a 24-hour cycle.",
     },
@@ -80,7 +80,7 @@ export default function Page() {
       title: "CO₂ Footprint Calculator",
       category: "Tool",
       type: "image",
-      src: "https://tfwelch.com/images/co2_tool.png",
+      src: "https://assets.tfwelch.com/images/co2_tool.png",
       description: "Estimate your personal transportation carbon footprint with a user-friendly tool.",
       link: "https://welch.shinyapps.io/CO2_Footprint/",
       details: "Built in R + Shiny, this tool compares cost and CO₂ by transport mode, distance, and frequency.",
@@ -89,7 +89,7 @@ export default function Page() {
       title: "Bus Stop Amenity Index",
       category: "Research",
       type: "image",
-      src: "https://tfwelch.com/images/bus_amenity.png",
+      src: "https://assets.tfwelch.com/images/bus_amenity.png",
       description: "Auckland-wide map of amenity availability and equity across 5,000+ bus stops.",
       details: "Research tool using Leaflet and OpenStreetMap overlays to visualize access disparities.",
     },
@@ -200,7 +200,7 @@ export default function Page() {
 
   return (
     <div className="bg-white text-black">
-      <div className="sticky top-0 z-10 bg-gradient-to-br from-sky-50 via-blue-100 to-white border-b p-4 flex flex-col md:flex-row justify-between items-center bg-cover bg-center" style={{ backgroundImage: 'url(https://tfwelch.com/images/header-background.jpg)' }}>
+      <div className="sticky top-0 z-10 bg-gradient-to-br from-sky-50 via-blue-100 to-white border-b p-4 flex flex-col md:flex-row justify-between items-center bg-cover bg-center" style={{ backgroundImage: 'url(https://assets.tfwelch.com/images/header-background.jpg)' }}>
         <div className="text-center md:text-left">
           <h1 className="text-3xl md:text-4xl font-bold drop-shadow">Timothy F. Welch</h1>
           <p className="text-sm text-gray-500">Urban planning, transport analytics, and data storytelling</p>
@@ -215,7 +215,7 @@ export default function Page() {
               <div className="flex flex-col md:flex-row gap-6 mt-4">
                 <div className="md:w-1/3">
                   <img 
-                    src="https://tfwelch.com/images/profile-photo.jpg" 
+                    src="https://assets.tfwelch.com/images/profile-photo.jpg" 
                     alt="Timothy F. Welch" 
                     className="rounded-lg shadow-md w-full"
                     onError={(e) => e.currentTarget.style.display = 'none'} // Hide if image doesn't exist
