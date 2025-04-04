@@ -20,6 +20,19 @@ export default function Page() {
     };
   }, []);
 
+  // Function to extract YouTube video ID from a URL
+  const getYouTubeVideoId = (url) => {
+    if (!url || !url.includes('youtube.com') && !url.includes('youtu.be')) return null;
+    const regExp = /^.*(youtu.be\/|v\/|u\/\w\/|embed\/|watch\?v=|&v=)([^#&?]*).*/;
+    const match = url.match(regExp);
+    return (match && match[2].length === 11) ? match[2] : null;
+  };
+
+  // Function to get YouTube thumbnail URL for a video ID
+  const getYouTubeThumbnailUrl = (videoId) => {
+    return `https://img.youtube.com/vi/${videoId}/mqdefault.jpg`;
+  };
+
   const projects = [
     {
       title: "NZ Road Deaths Tracker",
@@ -109,6 +122,14 @@ export default function Page() {
       featured: true
     },
     {
+      title: "Changes needed in Auckland CBD to avoid disaster congestion",
+      outlet: "1News",
+      date: "2023",
+      description: "Interview about disaster preparedness and avoiding congestion during emergency situations in urban areas.",
+      link: "https://www.youtube.com/watch?v=IWkxfc_mI94",
+      featured: true
+    },
+    {
       title: "Creating 'sponge cities' to cope with more rainfall",
       outlet: "The Conversation",
       date: "August 14, 2023",
@@ -179,7 +200,8 @@ export default function Page() {
 
   return (
     <div className="bg-white text-black">
-    <div className="sticky top-0 z-10 bg-gradient-to-br from-sky-50 via-blue-100 to-white border-b p-4 flex flex-col md:flex-row justify-between items-center bg-cover bg-center" style={{ backgroundImage: 'url(https://tfwelch.com/images/header-background.jpg)' }}>        <div className="text-center md:text-left">
+      <div className="sticky top-0 z-10 bg-gradient-to-br from-sky-50 via-blue-100 to-white border-b p-4 flex flex-col md:flex-row justify-between items-center bg-cover bg-center" style={{ backgroundImage: 'url(https://tfwelch.com/images/header-background.jpg)' }}>
+        <div className="text-center md:text-left">
           <h1 className="text-3xl md:text-4xl font-bold drop-shadow">Timothy F. Welch</h1>
           <p className="text-sm text-gray-500">Urban planning, transport analytics, and data storytelling</p>
         </div>
@@ -201,7 +223,7 @@ export default function Page() {
                 </div>
                 <div className="md:w-2/3">
                   <p className="mb-4">
-                    I am Senior Lecturer in Urban Planning at the University of Auckland, where I also serve as Co-Director of the Future Cities Research Hub. My work focuses on transportation planning, urban analytics, and sustainable infrastructure development.
+                    I am an Associate Professor in Urban Planning and Program Director at the University of Auckland, where I also serve as Co-Director of the Future Cities Research Hub. My work focuses on transportation planning, urban analytics, and sustainable infrastructure development.
                   </p>
                   <p className="mb-4">
                     With a background spanning urban planning, law, and transportation policy, my research examines the intersection of mobility, urban form, and climate resilience. I'm particularly interested in developing data-driven solutions for the first/last mile problem and creating more equitable, accessible transportation systems.
@@ -228,7 +250,7 @@ export default function Page() {
         </div>
       </div>
 
-      <div id="projects" className="p-4">
+      <div id="projects" className="p-4 pt-8">
         <h2 className="text-2xl font-bold mb-4">Projects</h2>
         <div className="mb-4 flex gap-2 flex-wrap">
           {categories.map((cat) => (
@@ -277,21 +299,37 @@ export default function Page() {
         <h2 className="text-2xl font-bold mb-4">Media & Appearances</h2>
         
         <h3 className="text-xl font-semibold mb-3">Featured Video Appearances</h3>
-        <div className="grid md:grid-cols-3 gap-4 mb-8">
-          {mediaAppearances.filter(item => item.featured).map((item, index) => (
-            <Card key={index} className="hover:shadow-md transition-all">
-              <CardContent className="p-4">
-                <h3 className="font-semibold">{item.title}</h3>
-                <p className="text-sm text-gray-600">{item.outlet} • {item.date}</p>
-                <p className="text-sm mt-2">{item.description}</p>
-                {item.link && (
-                  <a href={item.link} target="_blank" rel="noopener noreferrer">
-                    <Button size="sm" variant="outline" className="mt-3">Watch</Button>
-                  </a>
-                )}
-              </CardContent>
-            </Card>
-          ))}
+        <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+          {mediaAppearances.filter(item => item.featured).map((item, index) => {
+            const videoId = item.link ? getYouTubeVideoId(item.link) : null;
+            const thumbnailUrl = videoId ? getYouTubeThumbnailUrl(videoId) : null;
+            
+            return (
+              <Card key={index} className="hover:shadow-md transition-all">
+                <CardContent className="p-4">
+                  {thumbnailUrl && (
+                    <div className="mb-3 relative group overflow-hidden rounded-lg">
+                      <img 
+                        src={thumbnailUrl} 
+                        alt={item.title} 
+                        className="w-full h-36 object-cover group-hover:scale-105 transition-transform duration-300"
+                      />
+                      <div className="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-20 transition-all duration-300 flex items-center justify-center">
+                        <div className="w-12 h-12 rounded-full bg-white bg-opacity-80 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300">
+                          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="currentColor" className="w-6 h-6 text-red-600">
+                            <path d="M8 5v14l11-7z" />
+                          </svg>
+                        </div>
+                        <a href={item.link} target="_blank" rel="noopener noreferrer" className="absolute inset-0" aria-label={`Watch ${item.title}`}></a>
+                      </div>
+                    </div>
+                  )}
+                  <h3 className="font-semibold text-sm line-clamp-2">{item.title}</h3>
+                  <p className="text-xs text-gray-600">{item.outlet} • {item.date}</p>
+                </CardContent>
+              </Card>
+            );
+          })}
         </div>
         
         <h3 className="text-xl font-semibold mb-3">Recent Articles & Op-Eds</h3>
