@@ -179,8 +179,7 @@ export default function Page() {
 
   return (
     <div className="bg-white text-black">
-      <div className="relative overflow-hidden bg-gradient-to-br from-sky-50 via-blue-100 to-white border-b p-8 flex flex-col md:flex-row justify-between items-center bg-cover bg-center" style={{ backgroundImage: 'url(https://tfwelch.com/images/header-background.jpg)' }}>
-        <div className="text-center md:text-left">
+    <div className="sticky top-0 z-10 bg-gradient-to-br from-sky-50 via-blue-100 to-white border-b p-4 flex flex-col md:flex-row justify-between items-center bg-cover bg-center" style={{ backgroundImage: 'url(https://tfwelch.com/images/header-background.jpg)' }}>        <div className="text-center md:text-left">
           <h1 className="text-3xl md:text-4xl font-bold drop-shadow">Timothy F. Welch</h1>
           <p className="text-sm text-gray-500">Urban planning, transport analytics, and data storytelling</p>
         </div>
