@@ -223,7 +223,7 @@ export default function Page() {
                 </div>
                 <div className="md:w-2/3">
                   <p className="mb-4">
-                    I am an Associate Professor in Urban Planning and Program Director at the University of Auckland, where I also serve as Co-Director of the Future Cities Research Hub. My work focuses on transportation planning, urban analytics, and sustainable infrastructure development.
+                    I am a Senior Lecturer in Urban Planning at the University of Auckland. My work focuses on transportation planning, urban analytics, and sustainable infrastructure development.
                   </p>
                   <p className="mb-4">
                     With a background spanning urban planning, law, and transportation policy, my research examines the intersection of mobility, urban form, and climate resilience. I'm particularly interested in developing data-driven solutions for the first/last mile problem and creating more equitable, accessible transportation systems.
