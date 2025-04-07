@@ -44,6 +44,15 @@ export default function Page() {
       details: "Built using JavaScript and Chart.js, normalized by service days. Widely shared by NZ media and transport agencies.",
     },
     {
+      title: "NZ Road Safety Dashboard",
+      category: "Dashboard",
+      type: "image",
+      src: "https://assets.tfwelch.com/images/nzrddash_promo.gif",
+      description: "An interactive dashboard offering comprehensive analytics on New Zealand road safety.",
+      link: "https://nzroads.tfwelch.com/dashboard",
+      details: "Features advanced filters for time, region, vehicle type, age, and gender, enabling users to explore fatality trends, temporal patterns, and demographic analyses. Aims to support evidence-based safety initiatives by providing insights into risk factors and high-risk periods.",
+    },
+    {
       title: "Cycleway Dashboard",
       category: "Dashboard",
       type: "image",
