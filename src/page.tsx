@@ -44,6 +44,15 @@ export default function Page() {
       details: "Built using JavaScript and Chart.js, normalized by service days. Widely shared by NZ media and transport agencies.",
     },
     {
+      title: "Live Cycleway Counter",
+      category: "Dashboard",
+      type: "iframe",
+      src: "https://cycleway.tfwelch.com/cycle-counter/",
+      description: "Live counter of cycling trips on Auckland’s network.",
+      link: "https://cycleway.tfwelch.com/cycle-counter/",
+      details: "Embeddable real-time counter built from JSON data with animated display. Tracks daily and YTD trips across monitored cycleways.",
+    },
+    {
       title: "NZ Road Safety Dashboard",
       category: "Dashboard",
       type: "image",
